@@ -1,6 +1,5 @@
 pub mod configuration;
 pub mod routes;
-pub mod startup;
 
 use std::net::TcpListener;
 

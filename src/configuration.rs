@@ -25,7 +25,7 @@ enum MiloEnv {
 
 impl MiloEnv {
     fn get() -> MiloEnv {
-        if let Some(var) = env::var(MILO_ENV).ok() {
+        if let Ok(var) = env::var(MILO_ENV) {
             match var.as_str() {
                 "Test" => MiloEnv::Test,
                 _ => MiloEnv::None,
