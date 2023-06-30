@@ -1,0 +1,30 @@
+[package]
+name = "milo"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+path = "src/main.rs"
+name = "milo"
+
+[dependencies]
+actix-web = "4.3.1"
+reqwest = "0.11.18"
+serde = { version = "1.0.164", features = ["derive"] }
+config = "0.13.3"
+chrono = "0.4.26"
+uuid = { version = "1.4.0", features = ["v4"] }
+
+[dependencies.sqlx]
+version = "0.6.3"
+features = [
+    "runtime-actix-native-tls",
+    "postgres",
+    "macros",
+    "uuid",
+    "chrono",
+    "migrate",
+]
