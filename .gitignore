@@ -28,3 +28,5 @@ configuration.local.json
 
 # file uploads
 /tmp
+
+*.log.*

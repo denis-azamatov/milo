@@ -1,3 +1,7 @@
 [tasks.local-test]
 env = { MILO_ENV = "Test", RUST_BACKTRACE = "0" }
 script = "pwsh .\\scripts\\local_test.ps1"
+
+[tasks.local-test-log]
+env = { MILO_ENV = "Test", RUST_BACKTRACE = "0", TEST_LOG = "true" }
+script = "pwsh .\\scripts\\local_test.ps1"

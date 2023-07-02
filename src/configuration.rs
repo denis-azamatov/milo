@@ -1,5 +1,8 @@
 use std::env;
 
+use secrecy::{ExposeSecret, Secret};
+
+/// Aplication level settings
 #[derive(serde::Deserialize)]
 pub struct Settings {
     pub database: DatabaseSettings,
@@ -9,12 +12,13 @@ pub struct Settings {
 #[derive(serde::Deserialize)]
 pub struct DatabaseSettings {
     pub username: String,
-    pub password: String,
+    pub password: Secret<String>,
     pub port: u16,
     pub host: String,
     pub name: String,
 }
 
+/// Custom environment variable to detect local tests run.
 const MILO_ENV: &str = "MILO_ENV";
 
 #[derive(PartialEq, Eq)]
@@ -37,19 +41,25 @@ impl MiloEnv {
 }
 
 impl DatabaseSettings {
-    pub fn connection_string(&self) -> String {
-        format!(
+    pub fn connection_string(&self) -> Secret<String> {
+        Secret::new(format!(
             "postgres://{}:{}@{}:{}/{}",
-            self.username, self.password, self.host, self.port, self.name
-        )
+            self.username,
+            self.password.expose_secret(),
+            self.host,
+            self.port,
+            self.name
+        ))
     }
 
-    pub fn connection_string_without_db(&self) -> String {
-        println!("{}", self.port);
-        format!(
+    pub fn connection_string_without_db(&self) -> Secret<String> {
+        Secret::new(format!(
             "postgres://{}:{}@{}:{}",
-            self.username, self.password, self.host, self.port
-        )
+            self.username,
+            self.password.expose_secret(),
+            self.host,
+            self.port
+        ))
     }
 }
 
