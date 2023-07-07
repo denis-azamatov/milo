@@ -39,7 +39,7 @@ where
     T: Subscriber + Send + Sync,
     T: for<'a> LookupSpan<'a>,
 {
-    let file_appender = tracing_appender::rolling::daily("./", "milo.log");
+    let file_appender = tracing_appender::rolling::daily("./logs", "milo.log");
     let (file_writer, _guard) = tracing_appender::non_blocking(file_appender);
     FILE_WRITER_GUARD
         .set(_guard)
